@@ -1,21 +1,43 @@
-package blocklist
+package blocklist_test
 
 import (
 	"flag"
+	"fmt"
 	"log"
+	"os"
 	"sync"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"go.ideatocode.tech/blocklist"
+	"gopkg.in/yaml.v3"
 )
 
 var withOutput = flag.Bool("withOutput", false, "When set to true some tests will turn on output")
 
+func TestYaml(t *testing.T) {
+	type bl struct {
+		Blocklist *blocklist.BL
+	}
+	ym := `blocklist:
+  - facebook.com
+  - google.com
+  - '*yahoo.com'
+`
+	x := bl{}
+	err := yaml.Unmarshal([]byte(ym), &x)
+	assert.NoError(t, err)
+
+	buf, err := yaml.Marshal(&x)
+	assert.NoError(t, err)
+	fmt.Fprintf(os.Stderr, string(buf))
+	assert.Equal(t, ym, string(buf))
+}
 func TestConcurrency(t *testing.T) {
 
 	assert.NotPanics(t, func() {
-		x := New()
+		x := blocklist.New()
 
 		x.Add("google.com")
 		x.Add("facebook.com")

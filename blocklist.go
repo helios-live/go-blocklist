@@ -70,6 +70,28 @@ func reverse(s string) string {
 	return string(runes)
 }
 
+// UnmarshalYAML is called by the yaml package
+func (b *BL) UnmarshalYAML(
+	unmarshal func(interface{}) error,
+) error {
+
+	err := unmarshal(&b.list)
+	if err != nil {
+		return err
+	}
+	b.fixed = radix.New()
+	b.wild = radix.New()
+	for _, v := range b.list {
+		b.add(v, false)
+	}
+	return nil
+}
+
+// MarshalYAML is called by the yaml package
+func (b BL) MarshalYAML() (interface{}, error) {
+	return b.list, nil
+}
+
 // UnmarshalJSON is called by the json package
 func (b *BL) UnmarshalJSON(data []byte) error {
 	b.fixed = radix.New()
