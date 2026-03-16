@@ -1,4 +1,4 @@
-module github.com/helios-live/go-blocklist
+module github.com/helios-live/go-blocklist/v2
 
 go 1.17
 
