@@ -1,4 +1,4 @@
-module go.ideatocode.tech/blocklist
+module github.com/helios-live/go-blocklist
 
 go 1.17
 
