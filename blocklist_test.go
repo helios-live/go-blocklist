@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"go.ideatocode.tech/blocklist"
+	"github.com/helios-live/go-blocklist/v2"
 	"gopkg.in/yaml.v3"
 )
 
